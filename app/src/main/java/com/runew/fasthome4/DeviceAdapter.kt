@@ -1,7 +1,6 @@
 package com.runew.fasthome4
 
 import android.content.Intent
-import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -13,9 +12,6 @@ import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import androidx.appcompat.content.res.AppCompatResources.getDrawable
-
-
 
 
 class DeviceAdapter<T : Devices>: RecyclerView.Adapter<DeviceAdapter.ItemHolder>() {
@@ -55,7 +51,7 @@ class DeviceAdapter<T : Devices>: RecyclerView.Adapter<DeviceAdapter.ItemHolder>
 //                        recycler.adapter?.notifyDataSetChanged()
                         notifyDataSetChanged()
                     }
-                    R.id.action_recover -> {
+                    R.id.action_edit -> {
                         val intent = Intent(itemView.context, MainActivity::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         itemView.context.startActivity(intent)

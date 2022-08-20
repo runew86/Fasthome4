@@ -62,7 +62,7 @@ class DevicesFragment : Fragment(){
                 Log.d("ASD", "LOADING")
 //                adapter.addItems(model.data.data)
                 model.load()
-//                showContent()
+                showContent()
 //
 //                adapter.setOnclickListener { category ->
 //                    val intent = Intent(context, GalleryActivity::class.java)
@@ -86,6 +86,13 @@ class DevicesFragment : Fragment(){
         }
     }
     fun showProgress() {
-
+        recycler_view.visibility = View.GONE
+        progressBar.visibility = View.VISIBLE
+//        error_group.visibility = View.GONE
+    }
+    fun showContent() {
+        recycler_view.visibility = View.VISIBLE
+        progressBar.visibility = View.GONE
+//        error_group.visibility = View.GONE
     }
 }

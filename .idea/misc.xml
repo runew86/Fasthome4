@@ -3,13 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Android Projects/Fasthome4/app/src/main/res/drawable/dash.xml" value="0.1" />
-        <entry key="..\:/Android Projects/Fasthome4/app/src/main/res/layout/activity_device.xml" value="0.2" />
+        <entry key="..\:/Android Projects/Fasthome4/app/src/main/res/drawable/dash.xml" value="0.22" />
+        <entry key="..\:/Android Projects/Fasthome4/app/src/main/res/layout/activity_device.xml" value="0.75" />
         <entry key="..\:/Android Projects/Fasthome4/app/src/main/res/layout/activity_fragment.xml" value="0.1" />
         <entry key="..\:/Android Projects/Fasthome4/app/src/main/res/layout/activity_items.xml" value="0.1" />
         <entry key="..\:/Android Projects/Fasthome4/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Android Projects/Fasthome4/app/src/main/res/layout/fragment_device.xml" value="0.18" />
-        <entry key="..\:/Android Projects/Fasthome4/app/src/main/res/menu/options_menu.xml" value="0.1" />
+        <entry key="..\:/Android Projects/Fasthome4/app/src/main/res/menu/options_menu.xml" value="0.5" />
       </map>
     </option>
   </component>

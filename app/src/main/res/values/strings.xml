@@ -2,7 +2,7 @@
     <string name="app_name">Fasthome4</string>
     <string name="smart_devices">Умные вещи</string>
     <string name="action_delete">Удалить</string>
-    <string name="action_recover">Обновить</string>
+    <string name="action_edit">Настройки...</string>
     <string name="on_line">ON LINE</string>
     <string name="device">ПОДКЛЮЧЕННОЕ УСТРОЙСТВО</string>
 </resources>
