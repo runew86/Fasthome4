@@ -1,5 +1,6 @@
 package com.runew.fasthome4
 
+import android.app.Dialog
 import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,8 +10,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 
 
@@ -38,6 +42,10 @@ class DeviceAdapter<T : Devices>: RecyclerView.Adapter<DeviceAdapter.ItemHolder>
         Log.d("ASD",items.toString())
         notifyDataSetChanged()
     }
+    fun deleteItem(itemId: Int){
+        Log.d("ASD",itemId.toString())
+        list.removeAt(itemId)
+    }
     private fun performOptionsMenuClick(itemView: View, device:Devices)//, list: MutableList<Devices>, itemView: View)
     {
         val popupMenu = PopupMenu(itemView.context,itemView)
@@ -49,10 +57,11 @@ class DeviceAdapter<T : Devices>: RecyclerView.Adapter<DeviceAdapter.ItemHolder>
 
                     }
                     R.id.action_delete -> {
-                        list.remove(device)
-                        notifyDataSetChanged()
+                        val fragment =  itemView.context as? MainActivity
+                        val myDialogFragment = DeleteDialog()
+                        val manager = fragment?.supportFragmentManager
+                        myDialogFragment.show(manager!!,"mangerTag")
                     }
-
                 }
                 return false
             }

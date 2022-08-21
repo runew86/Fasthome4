@@ -11,13 +11,6 @@
                 android:endColor="#00FFF7"
                 android:type="sweep"
                 />
-<!--                <gradient-->
-<!--                    android:angle="90"-->
-<!--                    android:centerColor="#FFEB3B"-->
-<!--                    android:endColor="#00BCD4"-->
-<!--                    android:startColor="#FF5722"-->
-<!--                    android:type="sweep"-->
-<!--                    android:useLevel="true" />-->
             </shape>
     </item>
 </layer-list>

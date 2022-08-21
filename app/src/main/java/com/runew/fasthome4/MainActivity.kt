@@ -19,6 +19,5 @@ class MainActivity : AppCompatActivity() {
                 .add(R.id.main, fragment)
                 .commit()
         }
-
     }
 }

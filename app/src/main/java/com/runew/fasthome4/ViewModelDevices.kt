@@ -9,12 +9,14 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import kotlinx.android.synthetic.main.activity_device.*
 
 class ViewModelDevices : ViewModel() {
     enum class LifeCycle { CREATED, PROGRESS, LOADING, LOADED, ERROR }
     var lifeCycle = LifeCycle.CREATED
     lateinit var data: DeviceList
     val adapter = DeviceAdapter<Devices>()
+    lateinit var errorText: String
 
     val baseUrl = "https://api.fasthome.io"
     val api = Retrofit.Builder()
@@ -37,7 +39,9 @@ class ViewModelDevices : ViewModel() {
             }
             override fun onFailure(call: Call<DeviceList>, t: Throwable?) {
                 lifeCycle = LifeCycle.ERROR
-                fragment.checkLifeCycle()
+                Log.d("ASD", t!!.cause.toString())
+                errorText = t!!.cause.toString()
+                fragment.checkLifeCycle(errorText)
 //                loadListener()
             }
         })
@@ -46,5 +50,8 @@ class ViewModelDevices : ViewModel() {
     fun load()
     {
         lifeCycle = LifeCycle.LOADED
+    }
+    fun delete(id: Int){
+        adapter.deleteItem(id)
     }
 }

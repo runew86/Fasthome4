@@ -5,4 +5,5 @@
     <string name="action_edit">Настройки...</string>
     <string name="on_line">ON LINE</string>
     <string name="device">ПОДКЛЮЧЕННОЕ УСТРОЙСТВО</string>
+    <string name="error_title">Что-то пошло не так, ошибка:</string>
 </resources>

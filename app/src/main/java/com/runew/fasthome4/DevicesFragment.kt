@@ -12,16 +12,18 @@ import com.runew.fasthome4.ViewModelDevices.LifeCycle.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_device.*
 import kotlinx.android.synthetic.main.activity_main.*
+import java.lang.Exception
 
 class DevicesFragment : Fragment(){
     val layoutId = R.layout.activity_device
 
     private lateinit var model: ViewModelDevices
-//    private val adapter = DeviceAdapter<Devices>()
+    lateinit var adapter: DeviceAdapter<Devices>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("ASD","DevicesFragment onCreate")
         model = ViewModelProvider(this).get(ViewModelDevices::class.java)
+        adapter = model.adapter
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?{
         Log.d("ASD","DevicesFragment onCreateView")
@@ -33,7 +35,7 @@ class DevicesFragment : Fragment(){
         super.onActivityCreated(savedInstanceState)
         Log.d("ASD","DevicesFragment onActivityCreated")
         recycler_view.layoutManager = LinearLayoutManager(context)
-        recycler_view.adapter = model.adapter
+        recycler_view.adapter = adapter
         update_view.setOnClickListener()
         {
             val intent = Intent(this.context, MainActivity::class.java)
@@ -42,8 +44,10 @@ class DevicesFragment : Fragment(){
         }
         checkLifeCycle()
     }
-
     fun checkLifeCycle() {
+        checkLifeCycle("")
+    }
+    fun checkLifeCycle(arg: String) {
         when (model.lifeCycle) {
             CREATED -> {
                 Log.d("ASD", "CREATED")
@@ -57,11 +61,10 @@ class DevicesFragment : Fragment(){
             }
 
             ERROR -> {
-//                showError(R.string.unable_to_load) {
-//                    showProgress()
-//                    model.setListener { checkData() }
-//                    model.load()
-//                }
+                Log.d("ASD", "ERROR")
+                if(arg!="")
+                    showError(arg)
+                else model.loading(this)
             }
 
             LOADING -> {
@@ -92,13 +95,27 @@ class DevicesFragment : Fragment(){
         }
     }
     fun showProgress() {
+        layout_toolbar.visibility = View.VISIBLE
+        layout_error.visibility = View.GONE
         recycler_view.visibility = View.GONE
         progressBar.visibility = View.VISIBLE
-//        error_group.visibility = View.GONE
     }
     fun showContent() {
+        layout_toolbar.visibility = View.VISIBLE
+        layout_error.visibility = View.GONE
         recycler_view.visibility = View.VISIBLE
         progressBar.visibility = View.GONE
-//        error_group.visibility = View.GONE
+    }
+    fun showError(exception: String) {
+        layout_toolbar.visibility = View.GONE
+        layout_error.visibility = View.VISIBLE
+        tv_error_text.text = exception
+        recycler_view.visibility = View.GONE
+        progressBar.visibility = View.GONE
+    }
+    fun deleteDevice(deviceId: Int){
+        Log.d("ASD",deviceId.toString())
+        model.delete(deviceId)
+
     }
 }
