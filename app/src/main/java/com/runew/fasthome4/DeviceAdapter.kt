@@ -45,17 +45,14 @@ class DeviceAdapter<T : Devices>: RecyclerView.Adapter<DeviceAdapter.ItemHolder>
         popupMenu.setOnMenuItemClickListener(object: PopupMenu.OnMenuItemClickListener{
             override fun onMenuItemClick(item: MenuItem?): Boolean {
                 when(item?.itemId){
+                    R.id.action_edit -> {
+
+                    }
                     R.id.action_delete -> {
                         list.remove(device)
-//                        val recycler:RecyclerView = itemView.findViewById(R.id.recycler_view)
-//                        recycler.adapter?.notifyDataSetChanged()
                         notifyDataSetChanged()
                     }
-                    R.id.action_edit -> {
-                        val intent = Intent(itemView.context, MainActivity::class.java)
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                        itemView.context.startActivity(intent)
-                    }
+
                 }
                 return false
             }

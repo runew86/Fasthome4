@@ -1,5 +1,6 @@
 package com.runew.fasthome4
 
+import android.content.Intent
 import android.util.Log
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -33,7 +34,12 @@ class DevicesFragment : Fragment(){
         Log.d("ASD","DevicesFragment onActivityCreated")
         recycler_view.layoutManager = LinearLayoutManager(context)
         recycler_view.adapter = model.adapter
-
+        update_view.setOnClickListener()
+        {
+            val intent = Intent(this.context, MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            this.startActivity(intent)
+        }
         checkLifeCycle()
     }
 
@@ -74,7 +80,7 @@ class DevicesFragment : Fragment(){
             LOADED -> {
                 Log.d("ASD","LOADED")
 //                adapter.addItems(model.data.data)
-//                showContent()
+                showContent()
 //
 //                adapter.setOnclickListener { category ->
 //                    val intent = Intent(context, GalleryActivity::class.java)
