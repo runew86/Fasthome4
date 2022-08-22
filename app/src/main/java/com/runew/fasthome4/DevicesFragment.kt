@@ -11,38 +11,41 @@ import androidx.lifecycle.ViewModelProvider
 import com.runew.fasthome4.ViewModelDevices.LifeCycle.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_device.*
-import kotlinx.android.synthetic.main.activity_main.*
-import java.lang.Exception
 
 class DevicesFragment : Fragment(){
-    val layoutId = R.layout.activity_device
-
+    //model - ViewModelDevices - ViewModel
     private lateinit var model: ViewModelDevices
+    //adapter - DeviceAdapter - RecyclerView.Adapter
     lateinit var adapter: DeviceAdapter<Devices>
+    //создание фрагмента,...
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("ASD","DevicesFragment onCreate")
+        //... привзяка модели к фрагменту,...
         model = ViewModelProvider(this).get(ViewModelDevices::class.java)
+        //... привязка адаптера фрагмента к адавптеру в моделе
         adapter = model.adapter
     }
+    //загрузка фрагмента на экран
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?{
-        Log.d("ASD","DevicesFragment onCreateView")
-        return inflater.inflate(layoutId, container, false)
+        //загружаем файл разметки и добавляем его в контейнер main
+        return inflater.inflate(R.layout.activity_device, container, false)
     }
     @Suppress("DEPRECATION")
     @Deprecated("Deprecated in Java")
+    //фрагмент загружен
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        Log.d("ASD","DevicesFragment onActivityCreated")
+        //делаем список recycler_view линейным
         recycler_view.layoutManager = LinearLayoutManager(context)
         recycler_view.adapter = adapter
-        update_view.setOnClickListener()
-        {
-            val intent = Intent(this.context, MainActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            this.startActivity(intent)
-        }
+        update_view.setOnClickListener(){update()}
+        error_update_view.setOnClickListener(){update()}
         checkLifeCycle()
+    }
+    fun update(){
+        val intent = Intent(this.context, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        this.startActivity(intent)
     }
     fun checkLifeCycle() {
         checkLifeCycle("")
@@ -72,6 +75,7 @@ class DevicesFragment : Fragment(){
 //                adapter.addItems(model.data.data)
                 model.load()
                 showContent()
+
 //
 //                adapter.setOnclickListener { category ->
 //                    val intent = Intent(context, GalleryActivity::class.java)
@@ -84,7 +88,7 @@ class DevicesFragment : Fragment(){
                 Log.d("ASD","LOADED")
 //                adapter.addItems(model.data.data)
                 showContent()
-//
+
 //                adapter.setOnclickListener { category ->
 //                    val intent = Intent(context, GalleryActivity::class.java)
 //                    intent.putExtra("category", category)
@@ -113,9 +117,8 @@ class DevicesFragment : Fragment(){
         recycler_view.visibility = View.GONE
         progressBar.visibility = View.GONE
     }
-    fun deleteDevice(deviceId: Int){
-        Log.d("ASD",deviceId.toString())
-        model.delete(deviceId)
-
+    fun deleteDevice(itemId: Int){
+        Log.d("ASD",itemId.toString())
+        model.delete(itemId)
     }
 }

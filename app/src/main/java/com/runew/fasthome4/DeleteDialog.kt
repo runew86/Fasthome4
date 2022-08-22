@@ -7,8 +7,9 @@ import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 
-class DeleteDialog() : DialogFragment() {
+class DeleteDialog(itemId: Int) : DialogFragment() {
 
+    var itemId = itemId
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             val builder = AlertDialog.Builder(it)
@@ -17,7 +18,7 @@ class DeleteDialog() : DialogFragment() {
                 .setCancelable(true)
                 .setPositiveButton("Удалить",
                     DialogInterface.OnClickListener { dialog, id ->
-                    Log.d("ASD",activity.toString())
+                        (activity as MainActivity)?.dialogClicked(itemId)
                 })
                 .setNegativeButton("Отмена",
                     DialogInterface.OnClickListener { dialog, id ->

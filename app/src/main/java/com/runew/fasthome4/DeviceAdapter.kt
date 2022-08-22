@@ -1,6 +1,5 @@
 package com.runew.fasthome4
 
-import android.app.Dialog
 import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,6 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.fragment_device.view.*
 
 
 class DeviceAdapter<T : Devices>: RecyclerView.Adapter<DeviceAdapter.ItemHolder>() {
@@ -34,8 +34,10 @@ class DeviceAdapter<T : Devices>: RecyclerView.Adapter<DeviceAdapter.ItemHolder>
         holder.loadImage("$baseUrl${device.icon}")
         holder.itemView.setOnClickListener {
             performOptionsMenuClick(holder.itemView,device)
+//        holder.itemView.delete_device_layout.visibility = View.VISIBLE
         }
     }
+
     override fun getItemCount() = list.size
     fun addItems(items: List<T>) {
         this.list.addAll(items)
@@ -45,6 +47,7 @@ class DeviceAdapter<T : Devices>: RecyclerView.Adapter<DeviceAdapter.ItemHolder>
     fun deleteItem(itemId: Int){
         Log.d("ASD",itemId.toString())
         list.removeAt(itemId)
+        notifyDataSetChanged()
     }
     private fun performOptionsMenuClick(itemView: View, device:Devices)//, list: MutableList<Devices>, itemView: View)
     {
@@ -58,7 +61,7 @@ class DeviceAdapter<T : Devices>: RecyclerView.Adapter<DeviceAdapter.ItemHolder>
                     }
                     R.id.action_delete -> {
                         val fragment =  itemView.context as? MainActivity
-                        val myDialogFragment = DeleteDialog()
+                        val myDialogFragment = DeleteDialog(list.indexOf(device))
                         val manager = fragment?.supportFragmentManager
                         myDialogFragment.show(manager!!,"mangerTag")
                     }
@@ -69,7 +72,7 @@ class DeviceAdapter<T : Devices>: RecyclerView.Adapter<DeviceAdapter.ItemHolder>
         popupMenu.show()
     }
     class ItemHolder(view: View) : RecyclerView.ViewHolder(view) {
-        //private val tv_id: TextView = view.findViewById(R.id.tv_id)
+        private val tv_id: TextView = view.findViewById(R.id.tv_device_id)
         private val tv_name: TextView = view.findViewById(R.id.tv_name)
         private val iv_icon: ImageView = view.findViewById(R.id.iv_icon)
         private var tv_isonline: TextView = view.findViewById(R.id.tv_isonline)
@@ -80,7 +83,7 @@ class DeviceAdapter<T : Devices>: RecyclerView.Adapter<DeviceAdapter.ItemHolder>
 
 
         fun bind(device: Devices) {
-            //tv_id.text = device.id
+            tv_id.text = device.id
             tv_name.text = device.name.uppercase()
             tv_isonline.text = isOnline(device.isOnline)
             tv_status.text = setStatus(device.type, device.status)

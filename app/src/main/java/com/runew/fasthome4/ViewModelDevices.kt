@@ -51,7 +51,7 @@ class ViewModelDevices : ViewModel() {
     {
         lifeCycle = LifeCycle.LOADED
     }
-    fun delete(id: Int){
-        adapter.deleteItem(id)
+    fun delete(itemId: Int){
+        adapter.deleteItem(itemId)
     }
 }
