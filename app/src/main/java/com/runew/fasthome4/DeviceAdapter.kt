@@ -1,6 +1,5 @@
 package com.runew.fasthome4
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -30,22 +29,19 @@ class DeviceAdapter<T : Devices>: RecyclerView.Adapter<DeviceAdapter.ItemHolder>
         holder.loadImage("$baseUrl${device.icon}")
         holder.itemView.setOnClickListener {
             performOptionsMenuClick(holder.itemView,device)
-//        holder.itemView.delete_device_layout.visibility = View.VISIBLE
         }
     }
 
     override fun getItemCount() = list.size
     fun addItems(items: List<T>) {
         this.list.addAll(items)
-        Log.d("ASD",items.toString())
         notifyDataSetChanged()
     }
     fun deleteItem(itemId: Int){
-        Log.d("ASD",itemId.toString())
         list.removeAt(itemId)
         notifyDataSetChanged()
     }
-    private fun performOptionsMenuClick(itemView: View, device:Devices)//, list: MutableList<Devices>, itemView: View)
+    private fun performOptionsMenuClick(itemView: View, device:Devices)
     {
         val popupMenu = PopupMenu(itemView.context,itemView)
         popupMenu.inflate(R.menu.options_menu)
@@ -57,7 +53,7 @@ class DeviceAdapter<T : Devices>: RecyclerView.Adapter<DeviceAdapter.ItemHolder>
                     }
                     R.id.action_delete -> {
                         val fragment =  itemView.context as? MainActivity
-                        val myDialogFragment = DeleteDialog(list.indexOf(device))
+                        val myDialogFragment = DeleteDialog(device, list.indexOf(device))
                         val manager = fragment?.supportFragmentManager
                         myDialogFragment.show(manager!!,"mangerTag")
                     }
@@ -76,7 +72,6 @@ class DeviceAdapter<T : Devices>: RecyclerView.Adapter<DeviceAdapter.ItemHolder>
         private var tv_status: TextView = view.findViewById(R.id.tv_status)
         private val iv_status: ImageView = view.findViewById(R.id.iv_status)
         //private var tv_lastworktime: TextView = view.findViewById(R.id.tv_lastWorkTime)
-
 
         fun bind(device: Devices) {
             tv_id.text = device.id

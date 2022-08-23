@@ -1,7 +1,6 @@
 package com.runew.fasthome4
 
 import android.content.Intent
-import android.util.Log
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -22,7 +21,7 @@ class DevicesFragment : Fragment(){
         super.onCreate(savedInstanceState)
         //... привзяка модели к фрагменту,...
         model = ViewModelProvider(this).get(ViewModelDevices::class.java)
-        //... привязка адаптера фрагмента к адавптеру в моделе
+        //... привязка адаптера фрагмента к адаптеру в моделе
         adapter = model.adapter
     }
     //загрузка фрагмента на экран
@@ -37,7 +36,7 @@ class DevicesFragment : Fragment(){
         super.onActivityCreated(savedInstanceState)
         //делаем список recycler_view линейным
         recycler_view.layoutManager = LinearLayoutManager(context)
-        //привязка адаптера списка с адаптером модели
+        //привязка адаптера recycler_view с адаптером в моделе для хранения значения при обновлении главной активности
         recycler_view.adapter = adapter
         //событие нажатия иконки "Обновить" в тулбаре - перезапуск главной активности приложения
         update_view.setOnClickListener(){update()}
@@ -70,27 +69,20 @@ class DevicesFragment : Fragment(){
             }
             //ошибка загрузки контента
             ERROR -> {
-                if(arg!="")
-                    showError(arg)
-                else model.loading(this)
+                //показать экран ошибки с выводом аргумента - текста ошибки
+                showError(arg)
             }
-
+            //цикл - первая загрузка контента
             LOADING -> {
+                //контент загружен
                 model.load()
+                //показать экран первой загрузки
                 showContent()
             }
-
+            //цикл - контент ранее загружен
             LOADED -> {
-                Log.d("ASD","LOADED")
-//                adapter.addItems(model.data.data)
+                //выгрузить загруженный контент
                 showContent()
-
-//                adapter.setOnclickListener { category ->
-//                    val intent = Intent(context, GalleryActivity::class.java)
-//                    intent.putExtra("category", category)
-//                    startActivity(intent)
-//                }
-
             }
         }
     }
@@ -113,7 +105,7 @@ class DevicesFragment : Fragment(){
         progressBar.visibility = View.GONE
     }
     //показать ошибку
-    //
+    //виден экран ошибки с текстом ошибки
     fun showError(exception: String) {
         layout_toolbar.visibility = View.GONE
         layout_error.visibility = View.VISIBLE
@@ -121,8 +113,9 @@ class DevicesFragment : Fragment(){
         recycler_view.visibility = View.GONE
         progressBar.visibility = View.GONE
     }
+    //функция вызывается из главной активности после нажатия кнопки "Удалить" фрагмента AlertDialog
     fun deleteDevice(itemId: Int){
-        Log.d("ASD",itemId.toString())
+        //вызов функции удаления устройства в моделе
         model.delete(itemId)
     }
 }
