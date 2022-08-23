@@ -1,6 +1,5 @@
 package com.runew.fasthome4
 
-import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -9,13 +8,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.fragment_device.view.*
 
 
 class DeviceAdapter<T : Devices>: RecyclerView.Adapter<DeviceAdapter.ItemHolder>() {
@@ -30,7 +25,8 @@ class DeviceAdapter<T : Devices>: RecyclerView.Adapter<DeviceAdapter.ItemHolder>
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
         val device = list[position]
         holder.bind(device)
-        val baseUrl = "https://api.fasthome.io"
+
+        val baseUrl = baseUrl
         holder.loadImage("$baseUrl${device.icon}")
         holder.itemView.setOnClickListener {
             performOptionsMenuClick(holder.itemView,device)

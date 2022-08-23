@@ -37,51 +37,47 @@ class DevicesFragment : Fragment(){
         super.onActivityCreated(savedInstanceState)
         //делаем список recycler_view линейным
         recycler_view.layoutManager = LinearLayoutManager(context)
+        //привязка адаптера списка с адаптером модели
         recycler_view.adapter = adapter
+        //событие нажатия иконки "Обновить" в тулбаре - перезапуск главной активности приложения
         update_view.setOnClickListener(){update()}
+        //событие нажатия иконки "Обновить" при ошибке - перезапуск главной активности приложения
         error_update_view.setOnClickListener(){update()}
+        //проверка жизнинного цикла фрагмента
         checkLifeCycle()
     }
+    //функция перезапуска приложения
     fun update(){
+        //создание интента на главную активность с флагом новой задачи
         val intent = Intent(this.context, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        //запуск/перезапуск главной активности (приложения)
         this.startActivity(intent)
     }
+    //функция проверки жизненного цикла фрагмента (без аргументов)
     fun checkLifeCycle() {
         checkLifeCycle("")
     }
+    //функция проверки жизненного цикла фрагмента (с аргументом)
     fun checkLifeCycle(arg: String) {
         when (model.lifeCycle) {
+            //цикл создание фрагмента
             CREATED -> {
-                Log.d("ASD", "CREATED")
+                //показать прогрессбар
                 showProgress()
-//                model.setListener { checkData() }
+                //загрузка контента
                 model.loading(this)
             }
-            PROGRESS -> {
-//                showProgress()
-//                model.setListener { checkData() }
-            }
-
+            //ошибка загрузки контента
             ERROR -> {
-                Log.d("ASD", "ERROR")
                 if(arg!="")
                     showError(arg)
                 else model.loading(this)
             }
 
             LOADING -> {
-                Log.d("ASD", "LOADING")
-//                adapter.addItems(model.data.data)
                 model.load()
                 showContent()
-
-//
-//                adapter.setOnclickListener { category ->
-//                    val intent = Intent(context, GalleryActivity::class.java)
-//                    intent.putExtra("category", category)
-//                    startActivity(intent)
-//            }
             }
 
             LOADED -> {
@@ -98,18 +94,26 @@ class DevicesFragment : Fragment(){
             }
         }
     }
+    //показать прогрессбар
+    //виден тулбар
+    //виден прогрессбар
     fun showProgress() {
         layout_toolbar.visibility = View.VISIBLE
         layout_error.visibility = View.GONE
         recycler_view.visibility = View.GONE
         progressBar.visibility = View.VISIBLE
     }
+    //показать контент
+    //виден тулбар
+    //виден контент - список устройств
     fun showContent() {
         layout_toolbar.visibility = View.VISIBLE
         layout_error.visibility = View.GONE
         recycler_view.visibility = View.VISIBLE
         progressBar.visibility = View.GONE
     }
+    //показать ошибку
+    //
     fun showError(exception: String) {
         layout_toolbar.visibility = View.GONE
         layout_error.visibility = View.VISIBLE
